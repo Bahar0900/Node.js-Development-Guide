@@ -17,7 +17,7 @@ Perfect for developers learning to build HTTP-based applications using only core
 ## Node Js Architecture
 ![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/8bcaa8f68b05f2689db851c7d34df8377596f6a9/Task-4/nodejsarchitecture.drawio.svg)
 ## Basic HTTP Server Workflow in Node.js
-![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/8bcaa8f68b05f2689db851c7d34df8377596f6a9/Task-4/nodejsarchitecture.drawio.svg)
+![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/172edf4de23f6ac5be8a1c1048ec32925038eecf/Task-4/server.drawio%20(2).svg)
 ## Prerequisites
 
 ### Node.js Installation
