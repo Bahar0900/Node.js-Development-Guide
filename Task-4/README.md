@@ -1,7 +1,21 @@
-# Node.js HTTP Server and Client Documentation
+# Node.js HTTP Server and Client Guide
 
-This guide is designed for beginners to set up a Node.js HTTP server, create an HTTP client to interact with external APIs, handle various HTTP methods and status codes, and manually parse request bodies. Each section includes code, explanations, and verification steps to ensure successful implementation.
+This beginner-friendly guide helps you work with HTTP in Node.js. It covers:
 
+- ✅ Setting up a basic **Node.js HTTP server** from scratch.
+- 🌐 Creating an **HTTP client** to communicate with external APIs.
+- 📥 Handling different **HTTP methods** (GET, POST, PUT, DELETE).
+- 📊 Understanding and managing **HTTP status codes**.
+- 🧠 Manually **parsing request bodies** without external libraries.
+- 🔍 Each section includes:
+  - 📄 Sample code
+  - 💡 Explanations
+  - ✅ Step-by-step verification instructions
+
+Perfect for developers learning to build HTTP-based applications using only core Node.js modules.
+
+##Node Js Architecture
+![Node.js Logo](https://nodejs.org/static/images/logo.svg)
 ## Prerequisites
 
 ### Node.js Installation
