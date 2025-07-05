@@ -16,6 +16,25 @@ Perfect for developers learning to build HTTP-based applications using only core
 
 ## Node Js Architecture
 ![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/8bcaa8f68b05f2689db851c7d34df8377596f6a9/Task-4/nodejsarchitecture.drawio.svg)
+
+This diagram illustrates the internal architecture of Node.js and how it handles asynchronous operations using the event-driven model. Below is a step-by-step explanation of the flow:
+
+- **Application Layer**: This is where the JavaScript code written by the developer resides.
+- **V8 Engine**: The JavaScript engine (developed by Google) that executes the JavaScript code.
+- **Node.js Bindings (Node API)**: Provides the bridge between the JavaScript layer and the lower-level C/C++ APIs.
+- **OS Operations**: Some operations like file I/O or networking are offloaded to the operating system.
+- **Event Queue**: Stores callback functions to be executed by the event loop.
+- **Event Loop**:
+  - Continuously checks the event queue for pending callbacks.
+  - Handles non-blocking operations.
+  - Delegates long-running or blocking operations to worker threads.
+- **Worker Threads**:
+  - Execute blocking operations in the background.
+  - Return results via the event queue once the task is complete.
+- **Executive Callback**: Once the event is ready, the corresponding callback is executed by the event loop.
+
+This architecture allows Node.js to efficiently handle thousands of concurrent requests without blocking the main thread.
+
 ## Basic HTTP Server Workflow in Node.js
 ![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/172edf4de23f6ac5be8a1c1048ec32925038eecf/Task-4/server.drawio%20(2).svg)
 ## Prerequisites
