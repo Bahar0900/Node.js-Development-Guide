@@ -15,7 +15,7 @@ This beginner-friendly guide helps you work with HTTP in Node.js. It covers:
 Perfect for developers learning to build HTTP-based applications using only core Node.js modules.
 
 ## Node Js Architecture
-![Node.js Logo](https://nodejs.org/static/images/logo.svg)
+![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/8bcaa8f68b05f2689db851c7d34df8377596f6a9/Task-4/nodejsarchitecture.drawio.svg)
 ## Prerequisites
 
 ### Node.js Installation
