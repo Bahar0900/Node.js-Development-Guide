@@ -31,7 +31,7 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ---
 
-##Architecture
+## Architecture
 
 ---
 
