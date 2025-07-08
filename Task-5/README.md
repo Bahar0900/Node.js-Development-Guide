@@ -31,14 +31,7 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ---
 
-## Practical Tasks
-
-You will:
-
-- Build a RESTful API for managing a `Books` resource
-- Implement CRUD operations with in-memory storage
-- Handle dynamic routes using URL parameters
-- Serve a simple webpage using static HTML/CSS files
+##Architecture
 
 ---
 
