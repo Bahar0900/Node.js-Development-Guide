@@ -316,14 +316,15 @@ Add this line **before your routes**:
 app.use(express.static('public'));
 ```
 
-### 5. Test in Browser
+### 5. Test with curl
 
-Visit:
+Type:
 
 ```
-http://localhost:3000/
+curl http://localhost:3000/
 ```
 
-Expected: A styled HTML page with a link to `/api/books`.
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/d748c5f3f08ef1613ce120285b638fe7185df978/Task-5/images/image7.JPG)
 
 ---
