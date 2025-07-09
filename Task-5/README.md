@@ -123,7 +123,8 @@ Test via browser or curl:
 curl http://localhost:3000/
 ```
 
-Expected: `Welcome to the Books API!`
+Expected:
+![image](https://github.com/user-attachments/assets/4c5f9f6e-0a20-4d7e-acb7-053b053942f2)
 
 ---
 
