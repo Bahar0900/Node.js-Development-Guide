@@ -44,7 +44,7 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ### Express.js with Rest api
 
-![Express.js Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/c25fa7d6ff42d6dadaac1cdce662c17b3701a5d1/Task-5/images/server.drawio.svg)
+![Express.js Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/220f8a8aebe5ea1204d7cdd3590322f721d99981/Task-5/images/expressarchi.drawio.svg)
 
 - **Node.js Application**
   - Receives **REQUEST** (POST, GET, PATCH, PUT, DELETE)
