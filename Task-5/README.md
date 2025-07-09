@@ -124,7 +124,7 @@ curl http://localhost:3000/
 ```
 
 Expected:
-![image](https://github.com/user-attachments/assets/4c5f9f6e-0a20-4d7e-acb7-053b053942f2)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/636d765694681197874c7178f05f6e6218f1b752/Task-5/images/image1.JPG)
 
 ---
 
@@ -215,24 +215,34 @@ app.listen(PORT, () => {
 ```bash
 # GET all books
 curl http://localhost:3000/api/books
-
+```
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/636d765694681197874c7178f05f6e6218f1b752/Task-5/images/image1.JPG)
+```bash
 # GET single book by ID
 curl http://localhost:3000/api/books/1
-
+```
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2c825fb778ad9781dbcb7193d6ecb8c9f36948f9/Task-5/images/image2.JPG)
+```bash
 # POST new book
-curl -X POST http://localhost:3000/api/books \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Pride and Prejudice","author":"Jane Austen"}'
-
+curl -X POST http://localhost:3000/api/books/ -H "Content-Type: application/json" -d "{\"title\":\"Pride and Prejudice\",\"author\":\"Jane Austen\"}"
+```
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/a6153b4db54d733935b4f8ea54010101ff28f179/Task-5/images/image3.JPG)
+```bash
 # PUT update book
-curl -X PUT http://localhost:3000/api/books/1 \
-  -H "Content-Type: application/json" \
-  -d '{"title":"The Great Gatsby","author":"F. Scott Fitzgerald"}'
+curl -X PUT http://localhost:3000/api/books/1 -H "Content-Type: application/json" -d "{\"title\":\"The Great Gatsby\",\"author\":\"F. Scott Fitzgerald\"}"
 
+```
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/f9a944793f3fc22c95121fb5926fdd627f60509d/Task-5/images/image4.JPG)
+```bash
 # DELETE book
 curl -X DELETE http://localhost:3000/api/books/1
 ```
-
+Expected:
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/d466c59044cc586a924b3f2236dd745b1b45f43b/Task-5/images/image5.JPG)
 ---
 
 ## 🔍 Task 3: Add Query String Support
@@ -245,8 +255,8 @@ Test:
 curl http://localhost:3000/api/books?author=Orwell
 ```
 
-Expected: JSON list of books by George Orwell.
-
+Expected: 
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/844d6105629619d8381efb1a06b1da462b81a8ee/Task-5/images/image6.JPG)
 ---
 
 ## 🖼️ Task 4: Serve Static Files
