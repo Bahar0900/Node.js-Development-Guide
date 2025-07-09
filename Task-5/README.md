@@ -42,6 +42,29 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
     - Processes the "req" object
     - Sends data to create the "res" object
 
+### Express.js with Rest api
+
+![Express.js Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/c25fa7d6ff42d6dadaac1cdce662c17b3701a5d1/Task-5/images/server.drawio.svg)
+
+- **Node.js Application**
+  - Receives **REQUEST** (POST, GET, PATCH, PUT, DELETE)
+  - Sends **RESPONSE**
+
+- **Components:**
+  - **Express REST APIs**
+    - Manages incoming requests
+    - Processes data flow
+  - **NODE JS Files**
+    - Handles request processing
+    - Interacts with the database
+
+- **Database**
+  - Stores or retrieves data
+  - Connected to NODE JS Files
+
+- **Workflow:**
+  - REQUEST → Express REST APIs → NODE JS Files → Database
+  - Database → NODE JS Files → Express REST APIs → RESPONSE
 ---
 
 ## 🔧 Task 1: Express App Setup
