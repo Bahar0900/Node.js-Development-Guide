@@ -23,6 +23,25 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ## Architecture
 
+### A server architecture
+
+![A server Architecture](image_url_or_path)
+
+- **client.js** (represented by a computer icon)
+  - Sends an HTTP request
+  - Receives an HTTP response
+
+- **server.js** (represented by a server icon)
+  - **parse http request** block
+    - Takes the HTTP request from client.js
+    - Outputs a "req" (request) object
+  - **create http response** block
+    - Takes input from the Handler
+    - Outputs a "res" (response) object
+  - **Handler** block
+    - Processes the "req" object
+    - Sends data to create the "res" object
+
 ---
 
 ## 🔧 Task 1: Express App Setup
