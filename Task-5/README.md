@@ -25,7 +25,7 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ### A server architecture
 
-![A server Architecture](image_url_or_path)
+![A server Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/c25fa7d6ff42d6dadaac1cdce662c17b3701a5d1/Task-5/images/server.drawio.svg)
 
 - **client.js** (represented by a computer icon)
   - Sends an HTTP request
