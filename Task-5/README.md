@@ -12,16 +12,6 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ---
 
-## Topics Covered
-
-- Introduction to Express.js
-- Express app setup and basic routing
-- Handling GET, POST, PUT, DELETE methods
-- Using URL parameters and query strings
-- Serving static files
-
----
-
 ## Prerequisites
 
 - Basic knowledge of JavaScript and Node.js
