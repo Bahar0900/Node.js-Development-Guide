@@ -243,6 +243,7 @@ curl -X DELETE http://localhost:3000/api/books/1
 ```
 Expected:
 ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/d466c59044cc586a924b3f2236dd745b1b45f43b/Task-5/images/image5.JPG)
+
 ---
 
 ## 🔍 Task 3: Add Query String Support
@@ -255,8 +256,9 @@ Test:
 curl http://localhost:3000/api/books?author=Orwell
 ```
 
-Expected: 
+Expected:
 ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/844d6105629619d8381efb1a06b1da462b81a8ee/Task-5/images/image6.JPG)
+
 ---
 
 ## 🖼️ Task 4: Serve Static Files
