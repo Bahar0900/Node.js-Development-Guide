@@ -324,9 +324,11 @@ Type:
 
 ```
 curl http://localhost:3000/
+
 ```
 
 Expected:
+
 ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/d748c5f3f08ef1613ce120285b638fe7185df978/Task-5/images/image7.JPG)
 
 ---
