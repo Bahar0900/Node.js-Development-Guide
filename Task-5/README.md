@@ -240,8 +240,10 @@ Expected:
 ```bash
 # DELETE book
 curl -X DELETE http://localhost:3000/api/books/1
+
 ```
 Expected:
+
 ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/d466c59044cc586a924b3f2236dd745b1b45f43b/Task-5/images/image5.JPG)
 
 ---
