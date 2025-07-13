@@ -217,7 +217,7 @@ const rateLimitMiddleware = (req, res, next) => {
     requests.lastRequest = currentTime;
     requestStore[clientIp] = requests;
 
-    if (requests.count > 5) {
+    if (requests.count > 2) {
         return res.status(429).json({ error: 'Too many requests' });
     }
 
@@ -234,11 +234,16 @@ app.get('/test', (req, res) => {
 
 **Test it:**
 
-- Visit `/test` multiple times in under 60 seconds
-- After 5 requests, you’ll see:
-  ```json
-  { "error": "Too many requests" }
+- Run:
+  ```bash
+  node server.js
   ```
+- Browser: [http://localhost:3000/test/](http://localhost:3000/test/).Refresh 2 times. You'll see   
+   
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3f412704fe351be2f509e387c6af4b23b080bf3a/Task-6/images/browser4.JPG)
+- In console: `curl http://localhost:3000/error/`
+  
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3f412704fe351be2f509e387c6af4b23b080bf3a/Task-6/images/console4.JPG)
 
 ---
 
