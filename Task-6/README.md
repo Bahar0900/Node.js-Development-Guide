@@ -171,12 +171,16 @@ app.use((err, req, res, next) => {
 
 **Test it:**
 
-- Visit [http://localhost:3000/error](http://localhost:3000/error)  
-- Console will show stack trace  
-- Response:  
-  ```json
-  { "error": { "message": "Something went wrong!", "status": 500 } }
+- Run:
+  ```bash
+  node server.js
   ```
+- Browser: [http://localhost:3000/error/](http://localhost:3000/error/)
+   
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b6f40580fd65a8e0aeb61bf478071fc2420b43c1/Task-6/images/browser3.JPG)
+- In console: `curl http://localhost:3000/error/`
+  
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b6f40580fd65a8e0aeb61bf478071fc2420b43c1/Task-6/images/console3.JPG)
 
 ---
 
