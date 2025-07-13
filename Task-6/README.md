@@ -128,8 +128,6 @@ app.get('/greet', validateQueryMiddleware, (req, res) => {
 
 **Test it:**
 
-- ✅ [http://localhost:3000/greet?name=John](http://localhost:3000/greet?name=John)
-- ❌ [http://localhost:3000/greet](http://localhost:3000/greet)
 - Run:
   ```bash
   node server.js
