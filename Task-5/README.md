@@ -146,11 +146,20 @@ Create `books.json` with sample data:
 
 ```js
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const books = require('./books.json');
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+const booksPath = path.join(__dirname, 'books.json');
+
+// Helper function to write updated books to JSON file
+const saveBooksToFile = () => {
+  fs.writeFileSync(booksPath, JSON.stringify(books, null, 2), 'utf-8');
+};
 
 // GET all books
 app.get('/api/books', (req, res) => {
@@ -180,6 +189,7 @@ app.post('/api/books', (req, res) => {
   }
   const newBook = { id: books.length + 1, title, author };
   books.push(newBook);
+  saveBooksToFile();
   res.status(201).json(newBook);
 });
 
@@ -193,6 +203,7 @@ app.put('/api/books/:id', (req, res) => {
     return res.status(400).json({ error: 'Title and author are required' });
   }
   books[index] = { id, title, author };
+  saveBooksToFile();
   res.json(books[index]);
 });
 
@@ -202,12 +213,14 @@ app.delete('/api/books/:id', (req, res) => {
   const index = books.findIndex(book => book.id === id);
   if (index === -1) return res.status(404).json({ error: 'Book not found' });
   const deleted = books.splice(index, 1)[0];
+  saveBooksToFile();
   res.json(deleted);
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
 ```
 
 ### 3. Test API Endpoints
@@ -249,8 +262,6 @@ Expected:
 ---
 
 ## 🔍 Task 3: Add Query String Support
-
-### Update the `/api/books` route (already included above)
 
 Test:
 
