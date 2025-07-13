@@ -99,9 +99,11 @@ app.listen(3000, () => console.log('Server running on port 3000'));
   node server.js
   ```
 - Browser: [http://localhost:3000](http://localhost:3000)
+- Output:
+- ![img]()
 - In console: `curl http://localhost:3000/`
-  Output: 
-  ![img]()
+- Output:
+- ![img]()
 
 ---
 
