@@ -244,7 +244,11 @@ app.get('/test', (req, res) => {
 - In console: `curl http://localhost:3000/error/`
   
     ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3f412704fe351be2f509e387c6af4b23b080bf3a/Task-6/images/console4.JPG)
-
+  
+- Explanation:
+  
+    > The requestTimeMiddleware measures how long each request takes and logs it to the console.
+    > The rateLimitMiddleware keeps track of how many requests each user (by IP address) makes. If a user sends more than 2 requests within 60 seconds, they get a response:
 ---
 
 
