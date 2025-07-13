@@ -7,12 +7,6 @@ This beginner-friendly guide helps you work with HTTP in Node.js. It covers:
 - 📥 Handling different **HTTP methods** (GET, POST, PUT, DELETE).
 - 📊 Understanding and managing **HTTP status codes**.
 - 🧠 Manually **parsing request bodies** without external libraries.
-- 🔍 Each section includes:
-  - 📄 Sample code
-  - 💡 Explanations
-  - ✅ Step-by-step verification instructions
-
-Perfect for developers learning to build HTTP-based applications using only core Node.js modules.
 
 ## Node Js Architecture
 ![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b11865877ec20d30baecc3341ff426f6ad2152ad/Task-4/images/nodearchi.drawio.svg)
