@@ -130,7 +130,21 @@ app.get('/greet', validateQueryMiddleware, (req, res) => {
 
 - ✅ [http://localhost:3000/greet?name=John](http://localhost:3000/greet?name=John)
 - ❌ [http://localhost:3000/greet](http://localhost:3000/greet)
+- Run:
+  ```bash
+  node server.js
+  ```
+- Browser: [http://localhost:3000/greet?name=John](http://localhost:3000/greet?name=John)
+   
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/05277dba78528b6615b1a4895b637e0ad8867a7d/Task-6/images/browser2.JPG)
+- In console: `curl http://localhost:3000/greet?name=John`
+  
+    ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/05277dba78528b6615b1a4895b637e0ad8867a7d/Task-6/images/console2.JPG)
+  
+- Browser: [http://localhost:3000/greet](http://localhost:3000/greet)
 
+  ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/63a4d282206fe30c055ff42b412340cc6b057f40/Task-6/images/browser22.JPG)
+  
 ---
 
 ### 🚨 Task 3: Error Handling Middleware
