@@ -62,9 +62,6 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
   - Stores or retrieves data
   - Connected to NODE JS Files
 
-- **Workflow:**
-  - REQUEST → Express REST APIs → NODE JS Files → Database
-  - Database → NODE JS Files → Express REST APIs → RESPONSE
 ---
 
 ## 🔧 Task 1: Express App Setup
