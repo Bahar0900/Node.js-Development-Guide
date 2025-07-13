@@ -22,33 +22,27 @@ Middleware functions are the backbone of Express.js, sitting between the **clien
 *   End the request-response cycle.
 *   Call the next middleware in the stack.
 
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/middleware.drawio.svg)
+
 > Think of middleware as a sequence of filters that requests pass through before getting processed or rejected.
 
 ### 🔄 Middleware Flow
 
 **Without Middleware:**
 
-```
-Client → GET /users → Express Server → Response
-```
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/withoutmiddleware.drawio.svg)
 
 **With Middleware:**
 
-```
-Client → Middleware 1 → Middleware 2 → ... → Express Server → Response
-```
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/withmiddleware.drawio.svg)
 
 Or in case of failure:
 
-```
-Client → Middleware → ❌ Error Response
-```
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/errormiddleware.drawio.svg)
 
 ---
 
-## 📚 Middleware Theory
-
-### 🧱 Types of Middleware
+## 📚 Middleware Types
 
 - **Application-level**: Used across the entire app with `app.use()`
 - **Router-level**: Applied to specific routes via `express.Router()`
@@ -58,7 +52,7 @@ Client → Middleware → ❌ Error Response
 
 ---
 
-## 🛠️ Practical Tasks
+## 🛠️ Get Started
 
 ### 📁 Project Setup
 
