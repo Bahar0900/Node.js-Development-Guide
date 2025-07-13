@@ -98,9 +98,11 @@ app.listen(3000, () => console.log('Server running on port 3000'));
   ```bash
   node server.js
   ```
-- Browser: [http://localhost:3000](http://localhost:3000)  
+- Browser: [http://localhost:3000](http://localhost:3000)
+   
     ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/fabc5c1e5e3af715f0ed844ca25900487a97d761/Task-6/images/browser1.JPG)
-- In console: `curl http://localhost:3000/`  
+- In console: `curl http://localhost:3000/`
+  
     ![img](https://github.com/Bahar0900/Node.js-Development-Guide/blob/fabc5c1e5e3af715f0ed844ca25900487a97d761/Task-6/images/console1.JPG)
 
 ---
