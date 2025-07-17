@@ -16,7 +16,7 @@ Middleware functions are the backbone of Express.js, sitting between the **clien
 *   End the request-response cycle.
 *   Call the next middleware in the stack.
 
-![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/middleware.drawio.svg)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/22f194d3ea49b368f2c684a889b30ad1a613dba7/Task-6/images/middleware.drawio.svg)
 
 > Think of middleware as a sequence of filters that requests pass through before getting processed or rejected.
 
