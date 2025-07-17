@@ -3,7 +3,7 @@
 This beginner-friendly guide introduces you to working with HTTP in Node.js. It walks you through setting up a basic Node.js HTTP server from scratch, creating an HTTP client to interact with external APIs, and handling various HTTP methods such as GET, POST, PUT, and DELETE. You'll also gain a clear understanding of HTTP status codes and how to manage them effectively. Additionally, the guide covers how to manually parse request bodies without relying on external libraries, giving you a deeper insight into how HTTP communication works under the hood.
 
 ## Node Js Architecture
-![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b11865877ec20d30baecc3341ff426f6ad2152ad/Task-4/images/nodearchi.drawio.svg)
+![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/6f14923f1cc658e78afccfcfd97cdfd25098dbe8/Task-4/images/nodearchi.drawio%20(1).svg)
 
 This diagram illustrates the internal architecture of Node.js and how it handles asynchronous operations using the event-driven model. Below is a step-by-step explanation of the flow:
 
