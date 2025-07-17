@@ -2,13 +2,7 @@
 
 ## Overview
 
-This lab provides hands-on experience with **Express.js**, a minimal and flexible Node.js web framework. By completing this lab, you will learn how to:
-
-- Set up an Express application
-- Implement basic routing
-- Handle different HTTP methods (GET, POST, PUT, DELETE)
-- Work with URL parameters and query strings
-- Serve static files like HTML and CSS
+This lab provides hands-on experience with Express.js, a minimal and flexible Node.js web framework. By completing this lab, you will learn how to set up an Express application, implement basic routing, handle different HTTP methods such as GET, POST, PUT, and DELETE, work with URL parameters and query strings, and serve static files like HTML and CSS.
 
 ---
 
@@ -27,44 +21,30 @@ This lab provides hands-on experience with **Express.js**, a minimal and flexibl
 
 ![A server Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/c25fa7d6ff42d6dadaac1cdce662c17b3701a5d1/Task-5/images/server.drawio.svg)
 
-- **client.js** (represented by a computer icon)
-  - Sends an HTTP request
-  - Receives an HTTP response
+- **client.js** (represented by a computer icon): Sends an HTTP request and receives an HTTP response.
 
-- **server.js** (represented by a server icon)
-  - **parse http request** block
-    - Takes the HTTP request from client.js
-    - Outputs a "req" (request) object
-  - **create http response** block
-    - Takes input from the Handler
-    - Outputs a "res" (response) object
-  - **Handler** block
-    - Processes the "req" object
-    - Sends data to create the "res" object
+- **server.js** (represented by a server icon):
+  - **Parse HTTP request**: Takes the HTTP request from `client.js` and outputs a `req` (request) object.
+  - **Handler**: Processes the `req` object and prepares data for the response.
+  - **Create HTTP response**: Takes input from the Handler and outputs a `res` (response) object.
+
 
 ### Express.js with Rest api
 
 ![Express.js Architecture](https://github.com/Bahar0900/Node.js-Development-Guide/blob/220f8a8aebe5ea1204d7cdd3590322f721d99981/Task-5/images/expressarchi.drawio.svg)
 
-- **Node.js Application**
-  - Receives **REQUEST** (POST, GET, PATCH, PUT, DELETE)
-  - Sends **RESPONSE**
+- **Node.js Application**: Receives **REQUESTS** (POST, GET, PATCH, PUT, DELETE) and sends **RESPONSES**.
 
-- **Components:**
-  - **Express REST APIs**
-    - Manages incoming requests
-    - Processes data flow
-  - **NODE JS Files**
-    - Handles request processing
-    - Interacts with the database
+- **Express REST APIs**: Manage incoming requests and process data flow.
 
-- **Database**
-  - Stores or retrieves data
-  - Connected to NODE JS Files
+- **Node.js Files**: Handle request processing and interact with the database.
+
+- **Database**: Stores or retrieves data and stays connected to Node.js files.
+
 
 ---
 
-## 🔧 Task 1: Express App Setup
+##  Task 1: Express App Setup
 
 ### 1. Initialize the Project
 
@@ -125,7 +105,7 @@ Expected:
 
 ---
 
-## 📘 Task 2: RESTful Books API
+##  Task 2: RESTful Books API
 
 ### 1. Create In-Memory Data
 
@@ -258,7 +238,7 @@ Expected:
 
 ---
 
-## 🔍 Task 3: Add Query String Support
+##  Task 3: Add Query String Support
 
 Test:
 
@@ -271,7 +251,7 @@ Expected:
 
 ---
 
-## 🖼️ Task 4: Serve Static Files
+##  Task 4: Serve Static Files
 
 ### 1. Create Static Folder
 
