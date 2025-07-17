@@ -24,15 +24,15 @@ Middleware functions are the backbone of Express.js, sitting between the **clien
 
 **Without Middleware:**
 
-![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/withoutmiddleware.drawio.svg)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/6895ce43e28eba804c272dc7728d471ed60dafe4/Task-6/images/withoutmiddleware.drawio.svg)
 
 **With Middleware:**
 
-![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/withmiddleware.drawio.svg)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/6895ce43e28eba804c272dc7728d471ed60dafe4/Task-6/images/withmiddleware.drawio.svg)
 
 Or in case of failure:
 
-![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/2d6df7ac99860327ddb8b3a5a1de388eedf2060f/Task-6/images/errormiddleware.drawio.svg)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/6895ce43e28eba804c272dc7728d471ed60dafe4/Task-6/images/errormiddleware.drawio.svg)
 
 ---
 
