@@ -381,8 +381,11 @@ This section demonstrates how to create an HTTP client to fetch data from an ext
 ### Step-by-Step Instructions  
 
 **Create a Client File**:  
+
 Create a new file named `client.js` in the `server` folder.  
+
 Add the following code to fetch data from a public API (e.g., JSONPlaceholder):  
+
   ````javascript
        const http = require('http'); // corrected: use http, not https
 
