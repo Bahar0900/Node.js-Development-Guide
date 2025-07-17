@@ -1,12 +1,6 @@
 # Node.js HTTP Server and Client Guide
 
-This beginner-friendly guide helps you work with HTTP in Node.js. It covers:
-
-- ✅ Setting up a basic **Node.js HTTP server** from scratch.
-- 🌐 Creating an **HTTP client** to communicate with external APIs.
-- 📥 Handling different **HTTP methods** (GET, POST, PUT, DELETE).
-- 📊 Understanding and managing **HTTP status codes**.
-- 🧠 Manually **parsing request bodies** without external libraries.
+This beginner-friendly guide introduces you to working with HTTP in Node.js. It walks you through setting up a basic Node.js HTTP server from scratch, creating an HTTP client to interact with external APIs, and handling various HTTP methods such as GET, POST, PUT, and DELETE. You'll also gain a clear understanding of HTTP status codes and how to manage them effectively. Additionally, the guide covers how to manually parse request bodies without relying on external libraries, giving you a deeper insight into how HTTP communication works under the hood.
 
 ## Node Js Architecture
 ![Node.js Logo](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b11865877ec20d30baecc3341ff426f6ad2152ad/Task-4/images/nodearchi.drawio.svg)
@@ -49,157 +43,179 @@ This architecture allows Node.js to efficiently handle thousands of concurrent r
 - Use a terminal (Command Prompt, PowerShell, or any bash-compatible terminal) to run commands.
 
 ### Testing Tools
-- Install `curl` for testing HTTP requests:
-  - **Windows**: Install via [curl.se](https://curl.se) or use PowerShell.
-  - **macOS/Linux**: `curl` is usually pre-installed; verify with:
-    ````bash
-    curl --version
-    ````
-- Alternatively, use a browser or tools like Postman for testing.
+## Install `curl` for Testing HTTP Requests
+
+- **Windows**: Install via [curl.se](https://curl.se) or use PowerShell.  
+- **macOS/Linux**: `curl` is usually pre-installed. You can verify by running:  
+  ```bash
+  curl --version
+  ```
+
+Alternatively, you can use a browser or tools like Postman for testing HTTP requests.
+
 
 ## 1. Building a Basic HTTP Server
 This section guides you through creating a simple HTTP server that responds with a basic message.
 
-### Step-by-Step Instructions
+## Step-by-Step Instructions
 
-1. **Create a Project Directory**:
-   - Create a folder named `server`:
-       ````bash
-       mkdir server
-       cd server
-       ````
+### Create a Project Directory
 
-2. **Initialize a Node.js Project**:
-   - Run the following command to create a `package.json` file:
-       ````bash
-       npm init -y
-       ````
-   - This creates a `package.json` with default settings. Verify by checking the `server` folder for `package.json`.
+Create a folder named `server`:
 
-3. **Create the Server File**:
-   - Create a file named `index.js` in the `server` folder.
-   - Add the following code to create a basic HTTP server:
-       ````javascript
-       const http = require('http');
+```bash
+mkdir server
+cd server
+```
 
-       const myServer = http.createServer((req, res) => {
-           console.log('New request received.');
-           res.end('Hello from server');
-       });
+### Initialize a Node.js Project
 
-       myServer.listen(3050, () => console.log('Server is running on port 3050'));
-       ````
+Run the following command to create a `package.json` file:
 
-4. **Add Start Script to `package.json`**:
-   - Open `package.json` and modify the `scripts` section to include:
-       ````json
-       "scripts": {
-           "start": "node index.js"
-       }
-       ````
-   - Save the file.
+```bash
+npm init -y
+```
 
-5. **Run the Server**:
-   - In the terminal, run:
-       ````bash
-       npm start
-       ````
-   - Expected output in the terminal:  
-       ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/db5b60b7cdbaf624198d3c90b875232159ece418/Task-4/images/terminal1.JPG)
+This creates a `package.json` with default settings. Verify by checking the `server` folder for `package.json`.
 
-6. **Test the Server**:
-   - Open a browser and navigate to `http://localhost:3050`.
-   - Expected output: `Hello from server` displayed in the browser.
-   - Alternatively, use `curl`:
-       ````bash
-       curl http://localhost:3050
-       ````
-   - Expected output:
-     ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3e8dd93b4ee89cbe4e2cf1b8924f98185c7de09c/Task-4/images/terminal11.JPG)
-     
+### Create the Server File
+
+Create a file named `index.js` in the `server` folder.  
+Add the following code to create a basic HTTP server:
+
+```javascript
+const http = require('http');
+
+const myServer = http.createServer((req, res) => {
+    console.log('New request received.');
+    res.end('Hello from server');
+});
+
+myServer.listen(3050, () => console.log('Server is running on port 3050'));
+```
+
+### Add Start Script to `package.json`
+
+Open `package.json` and modify the `scripts` section to include:
+
+```json
+"scripts": {
+    "start": "node index.js"
+}
+```
+
+Save the file.
+
+### Run the Server
+
+In the terminal, run:
+
+```bash
+npm start
+```
+
+Expected output in the terminal:  
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/db5b60b7cdbaf624198d3c90b875232159ece418/Task-4/images/terminal1.JPG)
+
+### Test the Server
+
+Open a browser and navigate to `http://localhost:3050`.  
+Expected output: `Hello from server` displayed in the browser.
+
+Alternatively, use `curl`:
+
+```bash
+curl http://localhost:3050
+```
+
+Expected output:  
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3e8dd93b4ee89cbe4e2cf1b8924f98185c7de09c/Task-4/images/terminal11.JPG)
+
 
 ## 2. Creating a Server with Routes and Logging
 This section extends the basic server to handle different routes and log requests to a file.
 
 ### Step-by-Step Instructions
 
-1. **Install the `fs` Module**:
-   - The `fs` (File System) module is built into Node.js, so no installation is required.
+**Install the `fs` Module**:
+The `fs` (File System) module is built into Node.js, so no installation is required.
 
-2. **Update `index.js`**:
-   - Replace the content of `index.js` with the following code to handle routes and log requests:
-       ````javascript
-       const http = require('http');
-       const fs = require('fs');
+**Update `index.js`**:
+Replace the content of `index.js` with the following code to handle routes and log requests:
+```javascript
+const http = require('http');
+const fs = require('fs');
 
-       const myServer = http.createServer((req, res) => {
-           const log = `${Date.now()}: ${req.url} New request received\n`;
+const myServer = http.createServer((req, res) => {
+    const log = `${Date.now()}: ${req.url} New request received\n`;
 
-           fs.appendFile('log.txt', log, (err) => {
-               if (err) console.error('Error writing to log file:', err);
-               switch (req.url) {
-                   case '/':
-                       res.end('Homepage');
-                       break;
-                   case '/about':
-                       res.end('About page');
-                       break;
-                   default:
-                       res.end('404 Not Found');
-               }
-           });
-       });
+    fs.appendFile('log.txt', log, (err) => {
+        if (err) console.error('Error writing to log file:', err);
+        switch (req.url) {
+            case '/':
+                res.end('Homepage');
+                break;
+            case '/about':
+                res.end('About page');
+                break;
+            default:
+                res.end('404 Not Found');
+        }
+    });
+});
 
-       myServer.listen(3050, () => console.log('Server is running on port 3050'));
-       ````
+myServer.listen(3050, () => console.log('Server is running on port 3050'));
 
-3. **Run the Server**:
-   - Run:
-       ````bash
-       npm start
-       ````
-   - Expected output:
+````       
+             
+
+**Run the Server**:
+Run:  
+```bash
+npm start
+```
+Expected output:
      
-       ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/db5b60b7cdbaf624198d3c90b875232159ece418/Task-4/images/terminal1.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/db5b60b7cdbaf624198d3c90b875232159ece418/Task-4/images/terminal1.JPG)  
 
-4. **Test the Routes**:
-   - Test the homepage:
-       ````bash
-       curl http://localhost:3050/
-       ````
-       - Expected output:
+**Test the Routes**:  
+Test the homepage:  
+````bash
+curl http://localhost:3050/
+````  
+Expected output:  
         
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/e7838a8e74e56c9587aa10955b43b328fee2edfa/Task-4/images/terminal2.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/e7838a8e74e56c9587aa10955b43b328fee2edfa/Task-4/images/terminal2.JPG)  
          
-   - Test the about page:
-       ````bash
-       curl http://localhost:3050/about
-       ````
-       - Expected output:
+Test the about page:  
+````bash
+curl http://localhost:3050/about
+````  
+Expected output:  
          
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/9e665842b4777cf1d43a1edcb744deffcce49159/Task-4/images/terminal3.JPG)
+  ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/9e665842b4777cf1d43a1edcb744deffcce49159/Task-4/images/terminal3.JPG)  
          
-   - Test a non-existent route:
-       ````bash
-       curl http://localhost:3050/contact
-       ````
-       - Expected output:
+Test a non-existent route:  
+````bash
+curl http://localhost:3050/contact
+````  
+Expected output:  
 
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/002ea0acf7874df30cec6e7fd05e567f4569066a/Task-4/images/terminal4.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/002ea0acf7874df30cec6e7fd05e567f4569066a/Task-4/images/terminal4.JPG)  
          
-   - Check the `log.txt` file in the `server` folder for logged requests (e.g., timestamp and URL).
+Check the `log.txt` file in the `server` folder for logged requests (e.g., timestamp and URL).  
 
-## 3. Parsing URLs and Query Parameters
-This section adds URL parsing to handle query parameters and improve routing.
+## 3. Parsing URLs and Query Parameters  
+This section adds URL parsing to handle query parameters and improve routing.  
 
-### Step-by-Step Instructions
+### Step-by-Step Instructions  
 
-1. **Install the `url` Module**:
-   - The `url` module is built into Node.js, so no installation is required.
+**Install the `url` Module**:  
+The `url` module is built into Node.js, so no installation is required.  
 
-2. **Update `index.js`**:
-   - Replace the content of `index.js` with the following code to parse URLs and handle query parameters:
-       ````javascript
+**Update `index.js`**:  
+Replace the content of `index.js` with the following code to parse URLs and handle query parameters:  
+  ````javascript
        const http = require('http');
        const fs = require('fs');
        const url = require('url');
@@ -231,48 +247,49 @@ This section adds URL parsing to handle query parameters and improve routing.
        });
 
        myServer.listen(3050, () => console.log('Server is running on port 3050'));
-       ````
+  ````  
 
-3. **Run the Server**:
-   - Run:
-       ````bash
-       npm start
-       ````
+**Run the Server**:  
+Run:  
+````bash
+npm start
+````  
 
-4. **Test URL Parsing**:
-   - Test with a query parameter:
-       ````bash
-       curl http://localhost:3050/about?myname=teddybear
-       ````
-       - Expected output:
+**Test URL Parsing**:  
+Test with a query parameter:    
+````bash
+curl http://localhost:3050/about?myname=teddybear
+````  
+Expected output:  
 
-         ![IMAGE](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3a5813a853a846f7108c62577c0f365c87c72308/Task-4/images/terminal5.JPG)
+![IMAGE](https://github.com/Bahar0900/Node.js-Development-Guide/blob/3a5813a853a846f7108c62577c0f365c87c72308/Task-4/images/terminal5.JPG)  
          
-   - Check the terminal for the parsed URL object, which should look like:
+Check the terminal for the parsed URL object, which should look like:  
      
-      ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/bfbb48cec90f0483430743e4e5a9d0526c6fce1c/Task-4/images/terminal6.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/bfbb48cec90f0483430743e4e5a9d0526c6fce1c/Task-4/images/terminal6.JPG)  
      
-   - Test with multiple query parameters:
-       ````bash
-       curl "http://localhost:3050/about?myname=teddybear&id=ok"
-       ````
-       - Expected output:
+Test with multiple query parameters:  
+````bash
+curl "http://localhost:3050/about?myname=teddybear&id=ok"
+````  
+Expected output:  
   
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/0d5a3ddb95157b32d920b591f40b816984642a06/Task-4/images/terminal7.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/0d5a3ddb95157b32d920b591f40b816984642a06/Task-4/images/terminal7.JPG)  
          
-       - Server terminal output should contain `query: [Object: null prototype] { myname: 'teddybear', id: 'ok' },`.
+**Server terminal output should contain**   
+`query: [Object: null prototype] { myname: 'teddybear', id: 'ok' },`.  
 
-5. **Verify Logs**:
-   - Check `log.txt` for logged requests, including timestamps and URLs.
+**Verify Logs**:  
+Check `log.txt` for logged requests, including timestamps and URLs.  
 
 ## 4. Handling HTTP Methods and Status Codes
 This section extends the server to handle different HTTP methods (GET, POST) and return appropriate status codes.
 
-### Step-by-Step Instructions
+### Step-by-Step Instructions  
 
-1. **Update `index.js`**:
-   - Replace the content of `index.js` with the following code to handle GET and POST requests:
-       ````javascript
+**Update `index.js`**:
+Replace the content of `index.js` with the following code to handle GET and POST requests:  
+  ````javascript
        const http = require('http');
        const fs = require('fs');
        const url = require('url');
@@ -323,50 +340,50 @@ This section extends the server to handle different HTTP methods (GET, POST) and
        });
 
        myServer.listen(3050, () => console.log('Server is running on port 3050'));
-       ````
+  ````  
 
-2. **Run the Server**:
-   - Run:
-       ````bash
-       npm start
-       ````
+**Run the Server**:  
+Run:  
+````bash
+npm start
+````  
 
-3. **Test HTTP Methods**:
-   - Test GET request:
-       ````bash
-       curl http://localhost:3050/
-       ````
-       - Expected output:
+**Test HTTP Methods**:  
+Test GET request:  
+````bash
+curl http://localhost:3050/
+````  
+Expected output:  
 
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/fd65ec5c9b70cab9f34324ea02df27449783c9e5/Task-4/images/terminal8.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/fd65ec5c9b70cab9f34324ea02df27449783c9e5/Task-4/images/terminal8.JPG)  
          
-   - Test POST request (using curl):
-       ````bash
-       curl -X POST http://localhost:3050/signup
-       ````
-       - Expected output:
+Test POST request (using curl):  
+````bash
+curl -X POST http://localhost:3050/signup
+````  
+Expected output:  
 
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/1f665a026d2446d501d4248f7f135ec90cb1f1a3/Task-4/images/terminal9.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/1f665a026d2446d501d4248f7f135ec90cb1f1a3/Task-4/images/terminal9.JPG)  
          
-   - Test an unsupported method (e.g., PUT):
-       ````bash
-       curl -X PUT http://localhost:3050/
-       ````
-       - Expected output:
+Test an unsupported method (e.g., PUT):  
+````bash
+curl -X PUT http://localhost:3050/
+````  
+Expected output:  
 
-         ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/df92bd1c8a028888e9d73eb3e957d6f22635baaf/Task-4/images/terminal10.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/df92bd1c8a028888e9d73eb3e957d6f22635baaf/Task-4/images/terminal10.JPG)  
          
-   - Check `log.txt` for logged requests, including the method (e.g., GET, POST).
+Check `log.txt` for logged requests, including the method (e.g., GET, POST).  
 
-## 5. Creating an HTTP Client to Consume External APIs
-This section demonstrates how to create an HTTP client to fetch data from an external API.
+## 5. Creating an HTTP Client to Consume External APIs  
+This section demonstrates how to create an HTTP client to fetch data from an external API.  
 
-### Step-by-Step Instructions
+### Step-by-Step Instructions  
 
-1. **Create a Client File**:
-   - Create a new file named `client.js` in the `server` folder.
-   - Add the following code to fetch data from a public API (e.g., JSONPlaceholder):
-       ````javascript
+**Create a Client File**:  
+Create a new file named `client.js` in the `server` folder.  
+Add the following code to fetch data from a public API (e.g., JSONPlaceholder):  
+  ````javascript
        const http = require('http'); // corrected: use http, not https
 
       const options = {
@@ -394,29 +411,29 @@ This section demonstrates how to create an HTTP client to fetch data from an ext
       
       req.end();
 
-       ````
+  ````  
 
-2. **Run the Client**:
-   - Run:
-       ````bash
-       node client.js
-       ````
-   - Expected output:
+**Run the Client**:  
+Run:  
+````bash
+node client.js
+````  
+Expected output:  
 
-       ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/4e1c060663f9b278943d403de4884943bd62c90d/Task-4/images/terminal13.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/4e1c060663f9b278943d403de4884943bd62c90d/Task-4/images/terminal13.JPG)  
 
-3. **Explanation**:
-   - The `http` module is used to make a GET request to the the running server.
-   - The response is collected in chunks and parsed as JSON when complete.
+**Explanation**:  
+The `http` module is used to make a GET request to the the running server.  
+The response is collected in chunks and parsed as JSON when complete.  
 
-## 6. Parsing Request Bodies Manually
-This section shows how to manually parse POST request bodies.
+## 6. Parsing Request Bodies Manually  
+This section shows how to manually parse POST request bodies.  
 
-### Step-by-Step Instructions
+### Step-by-Step Instructions  
 
-1. **Update `index.js`**:
-   - Replace the content of `index.js` with the following code to parse POST request bodies:
-       ````javascript
+**Update `index.js`**:   
+Replace the content of `index.js` with the following code to parse POST request bodies:  
+  ````javascript
       const http = require('http');
       const fs = require('fs');
       const url = require('url');
@@ -466,21 +483,21 @@ This section shows how to manually parse POST request bodies.
       
       myServer.listen(3050, () => console.log('Server is running on port 3050'));
 
-       ````
+  ````   
 
-2. **Run the Server**:
-   - Run:
-       ````bash
-       npm start
-       ````
+**Run the Server**:  
+Run:   
+````bash
+npm start
+````   
 
-3. **Test POST Request**:
-   - Use `curl` to send a POST request:
-       ````bash
-       curl -X POST -d "username=john" http://localhost:3050/signup
-       ````
-   - Expected output:
+**Test POST Request**:  
+Use `curl` to send a POST request:  
+````bash
+curl -X POST -d "username=john" http://localhost:3050/signup
+````  
+Expected output:  
 
-     ![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b7c8e27e895a2aedd3ec0bccc00a4a70548e3c7f/Task-4/images/terminal14.JPG)
+![image](https://github.com/Bahar0900/Node.js-Development-Guide/blob/b7c8e27e895a2aedd3ec0bccc00a4a70548e3c7f/Task-4/images/terminal14.JPG)  
      
-   - The server collects the POST body in chunks, parses it using `URLSearchParams`, and extracts the `username` field.
+The server collects the POST body in chunks, parses it using `URLSearchParams`, and extracts the `username` field.  
