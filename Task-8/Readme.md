@@ -1,4 +1,4 @@
-```
+
 # A Beginner's Guide to Integrating PostgreSQL with Node.js Using TypeORM
 
 This guide walks you through integrating PostgreSQL with a Node.js application using TypeORM, covering setup, CRUD operations, migrations, and connection pooling.
@@ -267,4 +267,3 @@ You've now set up a complete Node.js application with:
 - CRUD API endpoints
 - Database migrations
 - Connection pooling with PgBouncer
-```
