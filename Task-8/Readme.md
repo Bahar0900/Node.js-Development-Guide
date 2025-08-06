@@ -240,15 +240,6 @@ Add the code after / route
     });
 ```
 
-Test with curl: 
-
-Create New User:  
-```
-curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d "{\"name\":\"John Doe\", \"email\":\"john@example.com\"}"
-```
-Output:  
-[!img]()  
-
 ## Database Migrations
 ### Install TypeORM CLI
 ```bash
@@ -305,31 +296,90 @@ AppDataSource.initialize()
   })
   .catch((error) => console.log(error));
 ```
+Run:  
+```
+node src/seed.js
+```
 
-## Step 9: Configure PgBouncer
-### pgbouncer.ini
+Explanation: 
+> The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.
+
+
+Test with curl: 
+
+Create New User:  
+```
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d "{\"name\":\"John Doe\", \"email\":\"john@example.com\"}"
+```
+Output:  
+[!img]()  
+
+Fetch All Users:  
+```
+curl http://localhost:3000/users
+```
+Output:  
+[!img]()  
+
+Update User By id:  
+```
+curl -X PUT http://localhost:3000/users/1 -H "Content-Type: application/json" -d "{\"name\":\"Jane Doe\", \"email\":\"jane@example.com\"}"
+```
+Output:  
+[!img]()  
+
+Delete User By id:  
+```
+curl -X DELETE http://localhost:3000/users/1
+```
+Output:  
+[!img]()  
+
+
+## Integrating PgBouncer
+### Create pgbouncer.ini
 ```ini
 [databases]
-mydatabase = host=localhost port=5432 dbname=mydatabase
+mydatabase=host=192.168.0.103 port=5432 user=postgres password=1234 dbname=mydatabase
 
 [pgbouncer]
-listen_port = 6432
-auth_type = plain
+listen_addr = 0.0.0.0
+auth_type = md5
+ignore_startup_parameters = extra_float_digits
 auth_file = userlist.txt
 pool_mode = session
 ```
+`Replace the host address with your pcs private address. Type ipconfig in cmd. Take ipv4: xxxxx  this address.Also change password`
 
-### Update data-source.js for PgBouncer
-```javascript
-const AppDataSource = new DataSource({
-  // ... other config
-  port: 6432, // PgBouncer port
-  extra: {
-    max: 20, // connection pool size
-    connectionTimeoutMillis: 2000
-  }
-});
+### Create userlist.txt
 ```
+"postgres" "md586745934327859"
+```
+`Change the md586745934327859 to your password+username hashed in md5`
+
+### Update .env for PgBouncer
+```javascript
+DB_HOST=localhost
+DB_PORT=6432
+DB_USERNAME=postgres
+DB_PASSWORD="1234"
+DB_DATABASE=mydatabase
+```
+
+Run:  
+```
+docker run -d --name pgbouncer-container -p 6432:6432 -e DATABASES="mydatabase=host=192.168.0.103 port=5432 user=postgres password=1234 dbname=mydatabase" -e AUTH_TYPE=md5 -e AUTH_FILE="/etc/pgbouncer/userlist.txt" -v C:\pgbouncer\pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini -v C:\pgbouncer\userlist.txt:/etc/pgbouncer/userlist.txt pgbouncer/pgbouncer
+```
+`Change the host password` 
+
+> This docker run command starts a detached Docker container named pgbouncer-container using the official pgbouncer/pgbouncer image. It maps port 6432 on the host to port 6432 inside the container, which is the default port PgBouncer listens on. The environment variable DATABASES defines a connection to a PostgreSQL database (mydatabase) running at IP 192.168.0.103, using user postgres and password 1234. Authentication type is set to md5, and the AUTH_FILE points to a user credentials file. Two local files (pgbouncer.ini and userlist.txt) are mounted into the container to provide PgBouncer’s configuration and user authentication details. This setup enables PgBouncer to act as a lightweight connection pooler for the PostgreSQL database.
+
+Run :
+```
+docker ps
+```
+Expected Output:
+
 
 ## Conclusion
 You've now set up a complete Node.js application with:
