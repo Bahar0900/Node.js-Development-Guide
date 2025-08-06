@@ -305,7 +305,7 @@ Explanation:
 > The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.
 
 
-Test with curl: 
+###Test with curl: 
 
 Create New User:  
 ```
@@ -337,6 +337,44 @@ Output:
 
 
 ## Integrating PgBouncer
+
+PgBouncer is a lightweight and efficient connection pooler for PostgreSQL that sits between client applications and the PostgreSQL server to manage database connections. In PostgreSQL, each client connection consumes memory and backend processes, which can become a bottleneck under high concurrency. PgBouncer uses connection pooling—a technique where a limited number of persistent connections to the database are maintained and reused across many client sessions—to minimize this overhead. This reduces the cost of repeatedly opening and closing connections, improves scalability, and protects the database from being overwhelmed. It's especially crucial for web applications or microservices that open short-lived, frequent connections. By efficiently managing client requests and limiting actual connections to PostgreSQL, PgBouncer ensures better performance, stability, and resource utilization. 
+
+### Architecture:
+
+
+### Insatlling pgbouncer  using docker  
+- Pull pgbouncer
+```
+docker pull pgbouncer/pgbouncer
+```
+- Go to C:\Program Files\PostgreSQL\17\data and open the pg_hba.conf file of postgres
+- Change the configuration to :
+```
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+# Local IPv6 loopback
+host    all             all             ::1/128                 md5
+
+# Replication from localhost
+local   replication     all                                     md5
+host    replication     all             127.0.0.1/32            md5
+host    replication     all             ::1/128                 md5
+
+# Allow all IPv4
+host    all             all             0.0.0.0/0               md5
+
+# Allow all IPv6 (if needed)
+host    all             all             ::/0                    md5
+```
+> It is important to match the hashing technique of postgres and pgbouncer to md5. And also postgres should allow the request from docker
+
+
 ### Create pgbouncer.ini
 ```ini
 [databases]
@@ -355,7 +393,7 @@ pool_mode = session
 ```
 "postgres" "md586745934327859"
 ```
-`Change the md586745934327859 to your password+username hashed in md5`
+`Change the md586745934327859 to your passwordusername hashed in md5.For example in this case md51234postgres. 1234postgres is hashed using  md5`
 
 ### Update .env for PgBouncer
 ```javascript
@@ -370,7 +408,7 @@ Run:
 ```
 docker run -d --name pgbouncer-container -p 6432:6432 -e DATABASES="mydatabase=host=192.168.0.103 port=5432 user=postgres password=1234 dbname=mydatabase" -e AUTH_TYPE=md5 -e AUTH_FILE="/etc/pgbouncer/userlist.txt" -v C:\pgbouncer\pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini -v C:\pgbouncer\userlist.txt:/etc/pgbouncer/userlist.txt pgbouncer/pgbouncer
 ```
-`Change the host password` 
+`Change the hosname and password` 
 
 > This docker run command starts a detached Docker container named pgbouncer-container using the official pgbouncer/pgbouncer image. It maps port 6432 on the host to port 6432 inside the container, which is the default port PgBouncer listens on. The environment variable DATABASES defines a connection to a PostgreSQL database (mydatabase) running at IP 192.168.0.103, using user postgres and password 1234. Authentication type is set to md5, and the AUTH_FILE points to a user credentials file. Two local files (pgbouncer.ini and userlist.txt) are mounted into the container to provide PgBouncer’s configuration and user authentication details. This setup enables PgBouncer to act as a lightweight connection pooler for the PostgreSQL database.
 
@@ -379,6 +417,9 @@ Run :
 docker ps
 ```
 Expected Output:
+[!image]()  
+
+See the stats of pgbouncer:
 
 
 ## Conclusion
