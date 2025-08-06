@@ -1,15 +1,7 @@
 
-# A Beginner's Guide to Integrating PostgreSQL with Node.js Using TypeORM
+# Integrating PostgreSQL with Node.js Using TypeORM,Pgbouncer and Redis
 
-This guide walks you through integrating PostgreSQL with a Node.js application using TypeORM, covering setup, CRUD operations, migrations, and connection pooling.
-
-## Objectives
-- Understand PostgreSQL and its role in data management
-- Connect Node.js to PostgreSQL using TypeORM
-- Learn ORM basics and entity relationships
-- Implement CRUD operations
-- Manage database migrations and seeding
-- Configure pgbouncer for connection pooling
+Here, we focus on integrating a PostgreSQL database with a Node.js backend application using modern ORM techniques. The architecture demonstrates a scalable, layered backend system featuring a Node.js application (using Express) that handles HTTP requests from web or mobile clients. It incorporates a caching layer with Redis for efficient data retrieval, a connection pooling layer using PgBouncer to optimize database connections, and a PostgreSQL database with primary and replica nodes for read/write separation. Through practical tasks, students will set up PostgreSQL and pgAdmin, implement entity models and relationships using TypeORM, perform CRUD operations, and manage migrations and seed data—laying the foundation for robust and maintainable backend development
 
 ## System Architecture
 [!img]()
