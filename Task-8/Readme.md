@@ -11,6 +11,9 @@ This guide walks you through integrating PostgreSQL with a Node.js application u
 - Manage database migrations and seeding
 - Configure pgbouncer for connection pooling
 
+## System Architecture
+[!img]()
+
 ## Prerequisites
 - Node.js LTS
 - PostgreSQL
@@ -32,7 +35,7 @@ net start postgresql-x64-14
 CREATE DATABASE mydatabase;
 ```
 
-## Step 2: Initialize Node.js Project
+## Initialize Node.js Project
 ```bash
 mkdir myproject
 cd myproject
