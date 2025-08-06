@@ -414,7 +414,14 @@ docker ps
 Expected Output:
 [!image]()  
 
-See the stats of pgbouncer:
+See the stats of pgbouncer:  
+
+## Integrating Redis
+
+Redis is an open-source, in-memory data structure store used as a high-performance cache, database, and message broker. In web backend systems, Redis is integrated to cache frequently accessed data such as API responses, session information, or user-specific content, significantly reducing the load on the primary database and improving response times. By placing Redis before PgBouncer in the system flow, the application first checks if the requested data is already available in the cache (a "cache hit"). If it is, the system can return the data instantly without querying the database. Only on a "cache miss" does the system proceed to PgBouncer for a pooled database connection. This reduces the number of database queries, improves scalability, and enhances overall performance.
+
+### Architecture:
+![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/97e7b51720d9bf53528475ffd706aff5efa29e5c/Task-8/images/redis%20(1).png)  
 
 
 ## Conclusion
