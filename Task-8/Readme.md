@@ -284,6 +284,8 @@ class CreateUsersTable1754371998850 {
 
 module.exports = CreateUsersTable1754371998850;
 ```
+Explanation:  
+> A TypeORM migration file is like a saved record of a change you want to make to your database. It has two parts: up() to apply the change (like creating a table), and down() to undo it (like dropping the table). When you run typeorm migration:run, it updates the database by running all pending up() methods. If needed, you can roll back with typeorm migration:revert, which calls the down() method. This helps you manage database changes easily without writing raw SQL, keeps your code and database in sync, and ensures that all team members and environments stay consistent—just like version control for your schema.
 
 ## Seed Database
 ### Create src/seed.js
