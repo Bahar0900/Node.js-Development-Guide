@@ -368,6 +368,12 @@ PgBouncer is a lightweight and efficient connection pooler for PostgreSQL that s
 ### Architecture:
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/2fed10a9a14b8c9e38dc08e7d4ac51da02903b89/Task-8/images/pgbouncer.drawio.svg)  
 
+There are three pooling modes of pg bouncer:
+
+- Session Pooling: Keeps one server connection per client until the client disconnects — supports session features.
+- Transaction Pooling: Assigns a server connection only during a transaction — better efficiency, no session features.
+- Statement Pooling: Reuses connections after each query — most efficient, autocommit only, no session or transaction support.
+
 ### Insatlling pgbouncer  using docker  
 - Pull pgbouncer
 ```
@@ -464,6 +470,14 @@ Redis is an open-source, in-memory data structure store used as a high-performan
 
 ### Architecture:
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/97e7b51720d9bf53528475ffd706aff5efa29e5c/Task-8/images/redis%20(1).png)  
+
+Redis can do  
+
+- Cache frequently accessed data
+- Store sessions (e.g., user login sessions)
+- Pub/Sub messaging between services
+- Rate limiting (e.g., API call throttling)
+- Queues (e.g., background jobs/tasks)
 
 ### Installation:
 - Download the Redis Windows port from MSOpenTech Redis or use WSL2 with the Linux instructions.
