@@ -16,18 +16,18 @@ This guide walks you through integrating PostgreSQL with a Node.js application u
 - PostgreSQL
 - pgAdmin (optional)
 
-## Step 1: Set Up Your Environment
-### 1.1 Install Node.js
+## Set Up Your Environment
+### Install Node.js
 ```bash
 node --version
 ```
 
-### 1.2 Install PostgreSQL
+### Install and start PostgreSQL
 ```bash
-pg_ctl -D "C:\Program Files\PostgreSQL\14\data" start
+net start postgresql-x64-14
 ```
-
-### 1.3 Create Database
+`Replace the postgresql-x64-14 with actual service name of postgresql. You will get it from services.msc`
+### Create Database
 ```sql
 CREATE DATABASE mydatabase;
 ```
@@ -40,8 +40,8 @@ npm init -y
 npm install typeorm pg reflect-metadata express dotenv
 ```
 
-## Step 3: Configure TypeORM
-### 3.1 .env File
+## Configure TypeORM
+### Create .env File
 ```env
 DB_HOST=localhost
 DB_PORT=5432
@@ -50,7 +50,7 @@ DB_PASSWORD=your_password
 DB_DATABASE=mydatabase
 ```
 
-### 3.2 data-source.js
+### Create data-source.js
 ```javascript
 const { DataSource } = require("typeorm");
 require("dotenv").config();
@@ -72,8 +72,8 @@ const AppDataSource = new DataSource({
 module.exports = { AppDataSource };
 ```
 
-## Step 4: Define Entities and Relationships
-### 4.1 User Entity (src/entity/User.js)
+## Define Entities and Relationships
+### User Entity (create src/entity/User.js)
 ```javascript
 const { EntitySchema } = require("typeorm");
 
@@ -105,7 +105,7 @@ const User = new EntitySchema({
 module.exports = { User };
 ```
 
-### 4.2 Post Entity (src/entity/Post.js)
+### Post Entity (create src/entity/Post.js)
 ```javascript
 const { EntitySchema } = require("typeorm");
 
@@ -137,7 +137,7 @@ const Post = new EntitySchema({
 module.exports = { Post };
 ```
 
-## Step 5: Set Up Express Server (src/index.js)
+## Set Up Express Server (create src/index.js)
 ```javascript
 const express = require("express");
 const { AppDataSource } = require("./data-source");
@@ -159,80 +159,149 @@ AppDataSource.initialize()
   })
   .catch((error) => console.log("Error during Data Source initialization:", error));
 ```
+Test it:  
+```
+curl http://locahost:3000/
+```
+Output:  
+[!image]()  
 
-## Step 6: Implement CRUD Operations
-### Updated src/index.js with CRUD endpoints
+## Implement CRUD Operations
+### Update src/index.js with CRUD endpoints  
+Add the code after / route  
+
 ```javascript
-// [Previous imports and initialization...]
 
-    // Create User
+    // POST /users (Create a user)
     app.post("/users", async (req, res) => {
       try {
-        const user = AppDataSource.manager.create(User, req.body);
+        const user = AppDataSource.manager.create(User, {
+          name: req.body.name,
+          email: req.body.email,
+        });
+
         await AppDataSource.manager.save(User, user);
-        res.status(201).send("User created");
+        res.send("User saved");
       } catch (err) {
+        console.error(err);
         res.status(500).send("Failed to create user");
       }
     });
 
-    // Get All Users
+    // GET /users (Fetch all users)
     app.get("/users", async (req, res) => {
       try {
         const users = await AppDataSource.manager.find(User);
-        res.json(users);
+        res.send(users);
       } catch (err) {
+        console.error(err);
         res.status(500).send("Failed to fetch users");
       }
     });
 
-    // [Additional CRUD endpoints...]
+    // PUT /users/:id (Update user by ID)
+    app.put("/users/:id", async (req, res) => {
+      try {
+        const user = await AppDataSource.manager.findOne(User, {
+          where: { id: parseInt(req.params.id) },
+        });
+
+        if (user) {
+          user.name = req.body.name;
+          user.email = req.body.email;
+          await AppDataSource.manager.save(User, user);
+          res.send("User updated");
+        } else {
+          res.status(404).send("User not found");
+        }
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("Failed to update user");
+      }
+    });
+
+    // DELETE /users/:id (Delete user by ID)
+    app.delete("/users/:id", async (req, res) => {
+      try {
+        const user = await AppDataSource.manager.findOne(User, {
+          where: { id: parseInt(req.params.id) },
+        });
+
+        if (user) {
+          await AppDataSource.manager.remove(User, user);
+          res.send("User deleted");
+        } else {
+          res.status(404).send("User not found");
+        }
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("Failed to delete user");
+      }
+    });
 ```
 
-## Step 7: Database Migrations
-### 7.1 Install TypeORM CLI
+Test with curl: 
+
+Create New User:  
+```
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d "{\"name\":\"John Doe\", \"email\":\"john@example.com\"}"
+```
+Output:  
+[!img]()  
+
+## Database Migrations
+### Install TypeORM CLI
 ```bash
 npm install typeorm@latest -g
 ```
 
-### 7.2 Create Migration
+### Create Migration
+Setting up execution policy.
 ```bash
-typeorm migration:create src/migration/CreateUsersTable
+set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```  
+
+```
+typeorm migration:create --outputJs src/migration/CreateUsersTable
 ```
 
-### 7.3 Example Migration File
+
+### Migration File Look like
 ```javascript
-class CreateUsersTable1234567890000 {
+const { MigrationInterface, QueryRunner } = require("typeorm");
+
+class CreateUsersTable1754371998850 {
   async up(queryRunner) {
-    await queryRunner.query(`
-      CREATE TABLE "users" (
-        "id" SERIAL PRIMARY KEY,
-        "name" VARCHAR NOT NULL,
-        "email" VARCHAR NOT NULL
-      )`);
+    await queryRunner.query(
+      `CREATE TABLE "user" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "email" character varying NOT NULL, CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`
+    );
   }
 
   async down(queryRunner) {
-    await queryRunner.query(`DROP TABLE "users"`);
+    await queryRunner.query(`DROP TABLE "user"`);
   }
 }
+
+module.exports = CreateUsersTable1754371998850;
 ```
 
-## Step 8: Seed Database
-### seed.js
+## Seed Database
+### Create src/seed.js
 ```javascript
 const { AppDataSource } = require("./data-source");
-const { User } = require("./entity/User");
+const { User } = require("./entity/User"); // EntitySchema
 
 AppDataSource.initialize()
   .then(async () => {
-    await AppDataSource.getRepository(User).save([
-      { name: "John Doe", email: "john@example.com" },
-      { name: "Jane Smith", email: "jane@example.com" }
-    ]);
+    const user = {
+      name: "John Doe",
+      email: "john@example.com",
+    };
+
+    await AppDataSource.getRepository(User).save(user);
     console.log("Seed data inserted");
   })
-  .catch(console.error);
+  .catch((error) => console.log(error));
 ```
 
 ## Step 9: Configure PgBouncer
