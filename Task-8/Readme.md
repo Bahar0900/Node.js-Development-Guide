@@ -168,9 +168,24 @@ Output:
 
 ## Implement CRUD Operations
 ### Update src/index.js with CRUD endpoints  
-Add the code after / route  
+Replace the code of index.js with it 
 
 ```javascript
+
+    const express = require("express");
+const { AppDataSource } = require("./data-source");
+const { User } = require("./entity/User"); // Must be the actual entity, not a string
+
+AppDataSource.initialize()
+  .then(async () => {
+    console.log("Data Source has been initialized!");
+
+    const app = express();
+    app.use(express.json());
+
+    app.get("/", (req, res) => {
+      res.send("Hello World!");
+    });
 
     // POST /users (Create a user)
     app.post("/users", async (req, res) => {
@@ -238,6 +253,12 @@ Add the code after / route
         res.status(500).send("Failed to delete user");
       }
     });
+
+    app.listen(3000, () => {
+      console.log("Server is running on port 3000");
+    });
+  })
+  .catch((error) => console.log("Error during Data Source initialization:", error));
 ```
 
 ## Database Migrations
@@ -304,36 +325,40 @@ node src/seed.js
 Explanation: 
 > The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.
 
+Run:  
+```
+node src/indes.js
+```
 
 ### Test with curl: 
 
 Create New User:  
 ```
-curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d "{\"name\":\"John Doe\", \"email\":\"john@example.com\"}"
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d "{\"name\":\"sahar Doe\", \"email\":\"sahar@example.com\"}"
 ```
 Output:  
-[!img]()  
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/627e4a48b6e7c0b4d5cd7ad62192eca755335242/Task-8/images/terminal2.JPG)  
 
 Fetch All Users:  
 ```
 curl http://localhost:3000/users
 ```
 Output:  
-[!img]()  
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/1ccea28a9b5a0b2b1473fe1886b36dbfaa85967b/Task-8/images/terminal3.JPG)  
 
 Update User By id:  
 ```
 curl -X PUT http://localhost:3000/users/1 -H "Content-Type: application/json" -d "{\"name\":\"Jane Doe\", \"email\":\"jane@example.com\"}"
 ```
 Output:  
-[!img]()  
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/fb464fce20317458beb58272701395693a23ea63/Task-8/images/terminal4.JPG)  
 
 Delete User By id:  
 ```
 curl -X DELETE http://localhost:3000/users/1
 ```
 Output:  
-[!img]()  
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/75ae8565e19df01a251818bb680b43dd87fbfd79/Task-8/images/terminal5.JPG)  
 
 
 ## Integrating PgBouncer
