@@ -442,9 +442,21 @@ Run :
 docker ps
 ```
 Expected Output:
-[!image]()  
+![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/dadf5ed686e2a73e2b0fb812f9fc188aca4b19be/Task-8/images/terminal6.JPG)  
 
-See the stats of pgbouncer:  
+Monito activities of pgbouncer:
+```
+psql -h localhost -p 6432 -U postgres pgbouncer
+SHOW STATS;
+SHOW POOLS;
+SHOW SERVERS;
+SHOW CLIENTS;
+SHOW LISTS;
+
+```
+Expected Output:  
+![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/f142fd3566c215aa2a4f4f7efc51ae10a3fdcbb5/Task-8/images/terminal7.JPG)  
+
 
 ## Integrating Redis
 
