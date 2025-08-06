@@ -300,7 +300,7 @@ Explanation:
 > The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.
 
 
-###Test with curl: 
+### Test with curl: 
 
 Create New User:  
 ```
