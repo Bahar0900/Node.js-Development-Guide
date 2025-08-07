@@ -4,7 +4,7 @@
 Here, we focus on integrating a PostgreSQL database with a Node.js backend application using modern ORM techniques. The architecture demonstrates a scalable, layered backend system featuring a Node.js application (using Express) that handles HTTP requests from web or mobile clients. It incorporates a caching layer with Redis for efficient data retrieval, a connection pooling layer using PgBouncer to optimize database connections, and a PostgreSQL database with primary and replica nodes for read/write separation. Through practical tasks, students will set up PostgreSQL and pgAdmin, implement entity models and relationships using TypeORM, perform CRUD operations, and manage migrations and seed data—laying the foundation for robust and maintainable backend development
 
 ## System Architecture
-![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/194b3df3a752b095a5826ab1412fb995d69801c8/Task-8/images/systermarchitecture%20final.png)
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/b18157ab0c08411fbdeef25b277541ce8fe91ed3/Task-8/images/systermarchitecture%20finalfinal.png)
 
 ## Prerequisites
 - Node.js LTS
