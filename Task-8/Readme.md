@@ -88,10 +88,6 @@ It includes
 This is installed previously with npm install
 
 ### Create Migration
-Setting up execution policy.
-```bash
-set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-```  
 
 ```
 typeorm migration:create --outputJs src/migration/CreateUsersTable
@@ -184,46 +180,45 @@ There are three pooling modes of pg bouncer:
 ```
 docker pull pgbouncer/pgbouncer
 ```
-- Go to C:\Program Files\PostgreSQL\17\data and open the pg_hba.conf file of postgres
-- Change the configuration to :
+- Run:  
+```
+docker exec -it postgres-container bash
+apt update
+apt install -y nano
+nano /var/lib/postgresql/data/pg_hba.conf
+```  
+- Replace the content with :
 ```
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-# "local" is for Unix domain socket connections only
 local   all             all                                     md5
-# IPv4 local connections:
 host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-# Local IPv6 loopback
 host    all             all             ::1/128                 md5
-
-# Replication from localhost
-local   replication     all                                     md5
 host    replication     all             127.0.0.1/32            md5
 host    replication     all             ::1/128                 md5
-
-# Allow all IPv4
 host    all             all             0.0.0.0/0               md5
-
-# Allow all IPv6 (if needed)
 host    all             all             ::/0                    md5
 ```
-> It is important to match the hashing technique of postgres and pgbouncer to md5. And also postgres should allow the request from docker
+`ctrl+o,enter,ctrl+x  to save and exit`  
+
+> It is important to match the hashing technique of postgres and pgbouncer to md5. And also postgres should allow the request from pgbouncer
 
 
 ### Create pgbouncer.ini
 ```ini
 [databases]
-mydatabase=host=192.168.0.103 port=5432 user=postgres password=1234 dbname=mydatabase
+mydatabase = host=172.17.0.2 port=5432 dbname=mydatabase user=postgres password=1234
 
 [pgbouncer]
 listen_addr = 0.0.0.0
+listen_port = 6432
 auth_type = md5
-ignore_startup_parameters = extra_float_digits
-auth_file = userlist.txt
-pool_mode = session
+auth_file = /etc/pgbouncer/userlist.txt
+logfile = /var/log/pgbouncer/pgbouncer.log
+pidfile = /var/run/pgbouncer/pgbouncer.pid
+admin_users = postgres
+
 ```
-`Replace the host address with your pcs private address. Type ipconfig in cmd. Take ipv4: xxxxx  this address.Also change password`
+`Replace the host address with postgres container address that was in .env file or type docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres-container`
 
 ### Create userlist.txt
 ```
@@ -233,7 +228,7 @@ pool_mode = session
 
 ### Update .env for PgBouncer
 ```javascript
-DB_HOST=localhost
+DB_HOST=pg bouncer container address
 DB_PORT=6432
 DB_USERNAME=postgres
 DB_PASSWORD="1234"
@@ -242,9 +237,17 @@ DB_DATABASE=mydatabase
 
 Run:  
 ```
-docker run -d --name pgbouncer-container -p 6432:6432 -e DATABASES="mydatabase=host=192.168.0.103 port=5432 user=postgres password=1234 dbname=mydatabase" -e AUTH_TYPE=md5 -e AUTH_FILE="/etc/pgbouncer/userlist.txt" -v C:\pgbouncer\pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini -v C:\pgbouncer\userlist.txt:/etc/pgbouncer/userlist.txt pgbouncer/pgbouncer
+docker rm -f pgbouncer
+docker run -d \
+  --name pgbouncer \
+  -p 6432:6432 \
+  --link postgres-container \
+  -v /myproject/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini \
+  -v /myproject/userlist.txt:/etc/pgbouncer/userlist.txt \
+  edoburu/pgbouncer
+
 ```
-`Change the hosname and password` 
+`Change the hosname and password. To get hostname  docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgbouncer` 
 
 > This docker run command starts a detached Docker container named pgbouncer-container using the official pgbouncer/pgbouncer image. It maps port 6432 on the host to port 6432 inside the container, which is the default port PgBouncer listens on. The environment variable DATABASES defines a connection to a PostgreSQL database (mydatabase) running at IP 192.168.0.103, using user postgres and password 1234. Authentication type is set to md5, and the AUTH_FILE points to a user credentials file. Two local files (pgbouncer.ini and userlist.txt) are mounted into the container to provide PgBouncer’s configuration and user authentication details. This setup enables PgBouncer to act as a lightweight connection pooler for the PostgreSQL database.
 
@@ -257,7 +260,10 @@ Expected Output:
 
 Monitor activities of pgbouncer:
 ```
-psql -h localhost -p 6432 -U postgres pgbouncer
+apt update && apt install -y postgresql-client
+
+psql -h 172.17.0.3 -p 6432 -U postgres pgbouncer
+
 SHOW STATS;
 SHOW POOLS;
 SHOW SERVERS;
@@ -285,12 +291,18 @@ Redis can do
 - Queues (e.g., background jobs/tasks)
 
 ### Installation:
-- Download the Redis Windows port from MSOpenTech Redis or use WSL2 with the Linux instructions.
-- Execute the redis-server.exe
-- on myproject folder run
-  ```
-  npm install redis
-  ```
+- Download the Redis. Run:
+```
+npm install redis dotenv
+docker run -d --name redis-container -p 6379:6379 redis
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redis-container
+
+```
+- Add in .env:
+```
+REDIS_HOST=redis container ip     # Or use container IP like 172.17.0.4
+REDIS_PORT=6379
+```
 - Check the code of src/index-redis.js
 > This updated code adds Redis caching to the previous Express and TypeORM setup for managing users. Specifically, it uses a Redis client to cache the list of users fetched from the database in the /users GET endpoint. When a request for all users comes in, the code first checks Redis for a cached version of the users. If found, it returns that cached data immediately, avoiding a database query and improving response time. If not found, it queries the database, sends the data back, and caches the result in Redis for one hour. Additionally, after any operation that modifies user data (create, update, or delete), the users cache in Redis is invalidated (deleted) to ensure the cache doesn’t serve stale data. This caching layer reduces database load and improves performance for read-heavy operations. The code also includes graceful Redis client shutdown on process termination.
 
