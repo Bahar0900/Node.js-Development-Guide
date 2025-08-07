@@ -295,7 +295,7 @@ node src/index-redis.js
 ```
 Testing with Postman:  
 ```
-http://locahost:3000/users/
+http://localhost:3000/users/
 ```
 If you run this get method  again and again the time taken will  be :  
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/b778399a67c70a2eb2a2a3ca2c8620760b2d3522/Task-8/images/terminal8.JPG)  
