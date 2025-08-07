@@ -65,7 +65,7 @@ node src/index.js
 ```
 Test '/' route:  
 ```
-curl http://locahost:3000/
+curl http://localhost:3000/
 ```
 Output:  
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/0ac8c95c11036177906875653e1415864a1fc4ca/Task-8/images/terminal1.JPG)  
