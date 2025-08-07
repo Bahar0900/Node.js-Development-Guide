@@ -19,12 +19,16 @@ node --version
 
 ### Install and start PostgreSQL
 ```bash
-net start postgresql-x64-14
+docker run -d --name postgres-container \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=1234 \
+  -e POSTGRES_DB=mydatabase \
+  -p 5432:5432 \
+  postgres:latest
 ```
-`Replace the postgresql-x64-14 with actual service name of postgresql. You will get it from services.msc`
 ### Create Database
 ```sql
-CREATE DATABASE mydatabase;
+docker exec -it postgres-container psql -U postgres -c "CREATE DATABASE mydatabase;"
 ```
 
 ## Initializing Node.js Project
@@ -39,25 +43,26 @@ npm install
 ## Configure TypeORM
 ### Create myproject/.env File
 ```env
-DB_HOST=localhost
+DB_HOST=IP of postgres continer
 DB_PORT=5432
 DB_USERNAME=user db user name
 DB_PASSWORD=your_password
 DB_DATABASE=mydatabase
 ```
+`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres-container running this you will find ip`
 
-### Datasource file in src/data-source.js
-> The AppDataSource object initializes a TypeORM DataSource instance configured for a PostgreSQL database. It dynamically loads connection parameters (host, port, username, password, database) from environment variables using dotenv. The synchronize: true option enables automatic schema synchronization based on defined entities, while logging: false disables SQL query logging. Entity definitions and migration scripts are resolved from the specified paths using glob patterns (src/entity/**/*.js and src/migration/**/*.js). This setup provides the necessary configuration for establishing and managing the database connection within a TypeORM-powered Node.js application.
+### Datasource file in src/data-source.js  
+The AppDataSource object initializes a TypeORM DataSource instance configured for a PostgreSQL database. It dynamically loads connection parameters (host, port, username, password, database) from environment variables using dotenv. The synchronize: true option enables automatic schema synchronization based on defined entities, while logging: false disables SQL query logging. Entity definitions and migration scripts are resolved from the specified paths using glob patterns (src/entity/**/*.js and src/migration/**/*.js). This setup provides the necessary configuration for establishing and managing the database connection within a TypeORM-powered Node.js application.
 
 ## Defining Entities and Relationships
 ### User Entity (It is in src/entity/User.js path)
-> This code defines a User entity schema using TypeORM’s EntitySchema for a table named users. It specifies three columns: id (a primary key with auto-increment), name, and email, both of type varchar. It also defines a one-to-many relationship between User and Post, indicating that each user can have multiple associated posts, with the inverseSide referencing the user property in the Post entity. This schema is used by TypeORM to map the User entity to the database table and manage its structure and relationships.
+This code defines a User entity schema using TypeORM’s EntitySchema for a table named users. It specifies three columns: id (a primary key with auto-increment), name, and email, both of type varchar. It also defines a one-to-many relationship between User and Post, indicating that each user can have multiple associated posts, with the inverseSide referencing the user property in the Post entity. This schema is used by TypeORM to map the User entity to the database table and manage its structure and relationships.
 
 ### Post Entity (It is in src/entity/Post.js path)
-> This code defines a Post entity schema using TypeORM’s EntitySchema for a table named posts. It includes three columns: id (a primary key with auto-increment), title (a string), and content (a text field). It also establishes a many-to-one relationship with the User entity, indicating that each post is associated with a single user, and the inverseSide refers to the posts property in the User entity. This schema enables TypeORM to map the Post entity to its corresponding database table and manage its structure and relations.
+This code defines a Post entity schema using TypeORM’s EntitySchema for a table named posts. It includes three columns: id (a primary key with auto-increment), title (a string), and content (a text field). It also establishes a many-to-one relationship with the User entity, indicating that each post is associated with a single user, and the inverseSide refers to the posts property in the User entity. This schema enables TypeORM to map the Post entity to its corresponding database table and manage its structure and relations.
 
 ## Setting Up Express Server (It is in src/index.js path)
-> This code initializes a PostgreSQL database connection using TypeORM (AppDataSource.initialize()), and once successful, sets up a basic Express.js server. The server listens on port 3000, parses incoming JSON requests using express.json(), and responds with "Hello World!" when the root (/) route is accessed. If the database connection fails, it logs an error. This setup ensures the server starts only after the database is successfully connected, making it suitable for applications that rely on a working database connection before handling requests.
+This code initializes a PostgreSQL database connection using TypeORM (AppDataSource.initialize()), and once successful, sets up a basic Express.js server. The server listens on port 3000, parses incoming JSON requests using express.json(), and responds with "Hello World!" when the root (/) route is accessed. If the database connection fails, it logs an error. This setup ensures the server starts only after the database is successfully connected, making it suitable for applications that rely on a working database connection before handling requests.
 
 Run:
 ```
