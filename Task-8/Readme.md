@@ -27,139 +27,42 @@ net start postgresql-x64-14
 CREATE DATABASE mydatabase;
 ```
 
-## Initialize Node.js Project
+## Initializing Node.js Project
 ```bash
 mkdir myproject
 cd myproject
-npm init -y
-npm install typeorm pg reflect-metadata express dotenv
+git pull https://github.com/poridhioss/Node.js-Development-Guide-Coding-Section.git
+npm install
 ```
 
 ## Configure TypeORM
-### Create .env File
+### Create myproject/.env File
 ```env
 DB_HOST=localhost
 DB_PORT=5432
-DB_USERNAME=postgres
+DB_USERNAME=user db user name
 DB_PASSWORD=your_password
 DB_DATABASE=mydatabase
 ```
 
-### Create src/data-source.js
-```javascript
-const { DataSource } = require("typeorm");
-require("dotenv").config();
-require("reflect-metadata");
+### Datasource file in src/data-source.js
+> The AppDataSource object initializes a TypeORM DataSource instance configured for a PostgreSQL database. It dynamically loads connection parameters (host, port, username, password, database) from environment variables using dotenv. The synchronize: true option enables automatic schema synchronization based on defined entities, while logging: false disables SQL query logging. Entity definitions and migration scripts are resolved from the specified paths using glob patterns (src/entity/**/*.js and src/migration/**/*.js). This setup provides the necessary configuration for establishing and managing the database connection within a TypeORM-powered Node.js application.
 
-const AppDataSource = new DataSource({
-  type: "postgres",
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  synchronize: true,
-  logging: false,
-  entities: ["src/entity/**/*.js"],
-  migrations: ["src/migration/**/*.js"],
-});
+## Defining Entities and Relationships
+### User Entity (It is in src/entity/User.js path)
+> This code defines a User entity schema using TypeORM’s EntitySchema for a table named users. It specifies three columns: id (a primary key with auto-increment), name, and email, both of type varchar. It also defines a one-to-many relationship between User and Post, indicating that each user can have multiple associated posts, with the inverseSide referencing the user property in the Post entity. This schema is used by TypeORM to map the User entity to the database table and manage its structure and relationships.
 
-module.exports = { AppDataSource };
-```
+### Post Entity (It is in src/entity/Post.js path)
+> This code defines a Post entity schema using TypeORM’s EntitySchema for a table named posts. It includes three columns: id (a primary key with auto-increment), title (a string), and content (a text field). It also establishes a many-to-one relationship with the User entity, indicating that each post is associated with a single user, and the inverseSide refers to the posts property in the User entity. This schema enables TypeORM to map the Post entity to its corresponding database table and manage its structure and relations.
 
-## Define Entities and Relationships
-### User Entity (create src/entity/User.js)
-```javascript
-const { EntitySchema } = require("typeorm");
-
-const User = new EntitySchema({
-  name: "User",
-  tableName: "users",
-  columns: {
-    id: {
-      primary: true,
-      type: "int",
-      generated: true,
-    },
-    name: {
-      type: "varchar",
-    },
-    email: {
-      type: "varchar",
-    },
-  },
-  relations: {
-    posts: {
-      type: "one-to-many",
-      target: "Post",
-      inverseSide: "user",
-    },
-  },
-});
-
-module.exports = { User };
-```
-
-### Post Entity (create src/entity/Post.js)
-```javascript
-const { EntitySchema } = require("typeorm");
-
-const Post = new EntitySchema({
-  name: "Post",
-  tableName: "posts",
-  columns: {
-    id: {
-      primary: true,
-      type: "int",
-      generated: true,
-    },
-    title: {
-      type: "varchar",
-    },
-    content: {
-      type: "text",
-    },
-  },
-  relations: {
-    user: {
-      type: "many-to-one",
-      target: "User",
-      inverseSide: "posts",
-    },
-  },
-});
-
-module.exports = { Post };
-```
-
-## Set Up Express Server (create src/index.js)
-```javascript
-const express = require("express");
-const { AppDataSource } = require("./data-source");
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-    
-    const app = express();
-    app.use(express.json());
-
-    app.get("/", (req, res) => {
-      res.send("Hello World!");
-    });
-
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
-    });
-  })
-  .catch((error) => console.log("Error during Data Source initialization:", error));
-```
+## Setting Up Express Server (It is in src/index.js path)
+> This code initializes a PostgreSQL database connection using TypeORM (AppDataSource.initialize()), and once successful, sets up a basic Express.js server. The server listens on port 3000, parses incoming JSON requests using express.json(), and responds with "Hello World!" when the root (/) route is accessed. If the database connection fails, it logs an error. This setup ensures the server starts only after the database is successfully connected, making it suitable for applications that rely on a working database connection before handling requests.
 
 Run:
 ```
 node src/index.js
 ```
-Test / route:  
+Test '/' route:  
 ```
 curl http://locahost:3000/
 ```
@@ -167,105 +70,16 @@ Output:
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/0ac8c95c11036177906875653e1415864a1fc4ca/Task-8/images/terminal1.JPG)  
 
 ## Implement CRUD Operations
-### Update src/index.js with CRUD endpoints  
-Replace the code of index.js with it 
+### The file src/index-crude.js with CRUD endpoints  
+It includes 
 
-```javascript
-
-    const express = require("express");
-const { AppDataSource } = require("./data-source");
-const { User } = require("./entity/User"); // Must be the actual entity, not a string
-
-AppDataSource.initialize()
-  .then(async () => {
-    console.log("Data Source has been initialized!");
-
-    const app = express();
-    app.use(express.json());
-
-    app.get("/", (req, res) => {
-      res.send("Hello World!");
-    });
-
-    // POST /users (Create a user)
-    app.post("/users", async (req, res) => {
-      try {
-        const user = AppDataSource.manager.create(User, {
-          name: req.body.name,
-          email: req.body.email,
-        });
-
-        await AppDataSource.manager.save(User, user);
-        res.send("User saved");
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to create user");
-      }
-    });
-
-    // GET /users (Fetch all users)
-    app.get("/users", async (req, res) => {
-      try {
-        const users = await AppDataSource.manager.find(User);
-        res.send(users);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to fetch users");
-      }
-    });
-
-    // PUT /users/:id (Update user by ID)
-    app.put("/users/:id", async (req, res) => {
-      try {
-        const user = await AppDataSource.manager.findOne(User, {
-          where: { id: parseInt(req.params.id) },
-        });
-
-        if (user) {
-          user.name = req.body.name;
-          user.email = req.body.email;
-          await AppDataSource.manager.save(User, user);
-          res.send("User updated");
-        } else {
-          res.status(404).send("User not found");
-        }
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to update user");
-      }
-    });
-
-    // DELETE /users/:id (Delete user by ID)
-    app.delete("/users/:id", async (req, res) => {
-      try {
-        const user = await AppDataSource.manager.findOne(User, {
-          where: { id: parseInt(req.params.id) },
-        });
-
-        if (user) {
-          await AppDataSource.manager.remove(User, user);
-          res.send("User deleted");
-        } else {
-          res.status(404).send("User not found");
-        }
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to delete user");
-      }
-    });
-
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
-    });
-  })
-  .catch((error) => console.log("Error during Data Source initialization:", error));
-```
+> This code sets up a basic Express.js server connected to a database via TypeORM's AppDataSource. It initializes the data source and defines RESTful API endpoints to manage User entities: a root GET endpoint (/) that returns "Hello World!", a POST endpoint (/users) to create a new user with name and email, a GET endpoint (/users) to fetch all users, a PUT endpoint (/users/:id) to update a user by their ID, and a DELETE endpoint (/users/:id) to delete a user by ID. Each endpoint interacts with the database through TypeORM's manager methods (create, save, find, findOne, remove) and includes basic error handling. The server listens on port 3000 once the data source is successfully initialized.
+> TypeORM reduces complexity by letting you perform database operations using simple JavaScript methods instead of writing raw SQL queries. For example, instead of writing an SQL statement like INSERT INTO users (name, email) VALUES (...) to add a new user, you just create a user object with AppDataSource.manager.create(User, {...}) and save it using AppDataSource.manager.save(User, user). Similarly, fetching users is as easy as calling AppDataSource.manager.find(User). This abstraction handles all the database connection, query building, and data mapping behind the scenes, making your code cleaner, easier to write, and focused on business logic rather than database details.
 
 ## Database Migrations
 ### Install TypeORM CLI
-```bash
-npm install typeorm@latest -g
-```
+
+This is installed previously with npm install
 
 ### Create Migration
 Setting up execution policy.
@@ -300,37 +114,22 @@ Explanation:
 > A TypeORM migration file is like a saved record of a change you want to make to your database. It has two parts: up() to apply the change (like creating a table), and down() to undo it (like dropping the table). When you run typeorm migration:run, it updates the database by running all pending up() methods. If needed, you can roll back with typeorm migration:revert, which calls the down() method. This helps you manage database changes easily without writing raw SQL, keeps your code and database in sync, and ensures that all team members and environments stay consistent—just like version control for your schema.
 
 ## Seed Database
-### Create src/seed.js
-```javascript
-const { AppDataSource } = require("./data-source");
-const { User } = require("./entity/User"); // EntitySchema
+### This file is in src/seed.js path
 
-AppDataSource.initialize()
-  .then(async () => {
-    const user = {
-      name: "John Doe",
-      email: "john@example.com",
-    };
-
-    await AppDataSource.getRepository(User).save(user);
-    console.log("Seed data inserted");
-  })
-  .catch((error) => console.log(error));
-```
 Run:  
 ```
 node src/seed.js
 ```
 
 Explanation: 
-> The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.
+> The src/seed.js file is a database seeding script that connects to the database using TypeORM and inserts initial data (e.g., a default user) into the relevant tables. This is essential for setting up consistent and ready-to-use data during development, testing, or staging environments. It ensures developers and automated tests have predictable, reliable data to work with, saving time and reducing manual setup. Seeding is also helpful for demos, CI/CD pipelines, and verifying that entity configurations like validations and relationships are functioning correctly.  
+
+### Test with curl: 
 
 Run:  
 ```
-node src/indes.js
+node src/index-crude.js
 ```
-
-### Test with curl: 
 
 Create New User:  
 ```
@@ -486,130 +285,12 @@ Redis can do
   ```
   npm install redis
   ```
-- Replace the code of index.js with
-```javascript
-const express = require("express");
-const { AppDataSource } = require("./data-source");
-const { User } = require("./entity/User");
-const redis = require("redis");
-
-// Initialize Redis client
-const redisClient = redis.createClient({
-  url: 'redis://localhost:6379' // Adjust URL if your Redis is hosted elsewhere
-});
-
-redisClient.on('error', (err) => console.log('Redis Client Error', err));
-redisClient.connect();
-
-AppDataSource.initialize()
-  .then(async () => {
-    console.log("Data Source has been initialized!");
-
-    const app = express();
-    app.use(express.json());
-
-    app.get("/", (req, res) => {
-      res.send("Hello World!");
-    });
-
-    // POST /users (Create a user)
-    app.post("/users", async (req, res) => {
-      try {
-        const user = AppDataSource.manager.create(User, {
-          name: req.body.name,
-          email: req.body.email,
-        });
-
-        await AppDataSource.manager.save(User, user);
-        // Invalidate users cache
-        await redisClient.del('users');
-        res.send("User saved");
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to create user");
-      }
-    });
-
-    // GET /users (Fetch all users with Redis caching)
-    app.get("/users", async (req, res) => {
-      try {
-        // Check Redis cache first
-        const cachedUsers = await redisClient.get('users');
-        if (cachedUsers) {
-          return res.send(JSON.parse(cachedUsers));
-        }
-
-        // If not in cache, fetch from database
-        const users = await AppDataSource.manager.find(User);
-        // Store in Redis with 1 hour expiration
-        await redisClient.setEx('users', 3600, JSON.stringify(users));
-        res.send(users);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to fetch users");
-      }
-    });
-
-    // PUT /users/:id (Update user by ID)
-    app.put("/users/:id", async (req, res) => {
-      try {
-        const user = await AppDataSource.manager.findOne(User, {
-          where: { id: parseInt(req.params.id) },
-        });
-
-        if (user) {
-          user.name = req.body.name;
-          user.email = req.body.email;
-          await AppDataSource.manager.save(User, user);
-          // Invalidate users cache
-          await redisClient.del('users');
-          res.send("User updated");
-        } else {
-          res.status(404).send("User not found");
-        }
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to update user");
-      }
-    });
-
-    // DELETE /users/:id (Delete user by ID)
-    app.delete("/users/:id", async (req, res) => {
-      try {
-        const user = await AppDataSource.manager.findOne(User, {
-          where: { id: parseInt(req.params.id) },
-        });
-
-        if (user) {
-          await AppDataSource.manager.remove(User, user);
-          // Invalidate users cache
-          await redisClient.del('users');
-          res.send("User deleted");
-        } else {
-          res.status(404).send("User not found");
-        }
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to delete user");
-      }
-    });
-
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
-    });
-  })
-  .catch((error) => console.log("Error during Data Source initialization:", error));
-
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-  await redisClient.quit();
-  process.exit(0);
-});
-```  
+- Check the code of src/index-redis.js
+> This updated code adds Redis caching to the previous Express and TypeORM setup for managing users. Specifically, it uses a Redis client to cache the list of users fetched from the database in the /users GET endpoint. When a request for all users comes in, the code first checks Redis for a cached version of the users. If found, it returns that cached data immediately, avoiding a database query and improving response time. If not found, it queries the database, sends the data back, and caches the result in Redis for one hour. Additionally, after any operation that modifies user data (create, update, or delete), the users cache in Redis is invalidated (deleted) to ensure the cache doesn’t serve stale data. This caching layer reduces database load and improves performance for read-heavy operations. The code also includes graceful Redis client shutdown on process termination.
 
 Run:
 ```
-node src/index.js
+node src/index-redis.js
 ```
 Testing with Postman:  
 ```
