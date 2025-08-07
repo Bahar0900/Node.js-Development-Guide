@@ -4,7 +4,7 @@
 Here, we focus on integrating a PostgreSQL database with a Node.js backend application using modern ORM techniques. The architecture demonstrates a scalable, layered backend system featuring a Node.js application (using Express) that handles HTTP requests from web or mobile clients. It incorporates a caching layer with Redis for efficient data retrieval, a connection pooling layer using PgBouncer to optimize database connections, and a PostgreSQL database with primary and replica nodes for read/write separation. Through practical tasks, students will set up PostgreSQL and pgAdmin, implement entity models and relationships using TypeORM, perform CRUD operations, and manage migrations and seed data—laying the foundation for robust and maintainable backend development
 
 ## System Architecture
-![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/e8cbc2c966ea9f206f6e8bfda1c92ca3c758f915/Task-8/images/systemactualdiagram.png)
+![img](https://github.com/poridhioss/Node.js-Development-Guide/blob/194b3df3a752b095a5826ab1412fb995d69801c8/Task-8/images/systermarchitecture%20final.png)
 
 ## Prerequisites
 - Node.js LTS
@@ -450,7 +450,7 @@ docker ps
 Expected Output:
 ![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/dadf5ed686e2a73e2b0fb812f9fc188aca4b19be/Task-8/images/terminal6.JPG)  
 
-Monito activities of pgbouncer:
+Monitor activities of pgbouncer:
 ```
 psql -h localhost -p 6432 -U postgres pgbouncer
 SHOW STATS;
@@ -469,7 +469,7 @@ Expected Output:
 Redis is an open-source, in-memory data structure store used as a high-performance cache, database, and message broker. In web backend systems, Redis is integrated to cache frequently accessed data such as API responses, session information, or user-specific content, significantly reducing the load on the primary database and improving response times. By placing Redis before PgBouncer in the system flow, the application first checks if the requested data is already available in the cache (a "cache hit"). If it is, the system can return the data instantly without querying the database. Only on a "cache miss" does the system proceed to PgBouncer for a pooled database connection. This reduces the number of database queries, improves scalability, and enhances overall performance.
 
 ### Architecture:
-![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/97e7b51720d9bf53528475ffd706aff5efa29e5c/Task-8/images/redis%20(1).png)  
+![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/194b3df3a752b095a5826ab1412fb995d69801c8/Task-8/images/redisfinal.png)  
 
 Redis can do  
 
