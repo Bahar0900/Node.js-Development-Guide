@@ -166,7 +166,7 @@ Output:
 PgBouncer is a lightweight and efficient connection pooler for PostgreSQL that sits between client applications and the PostgreSQL server to manage database connections. In PostgreSQL, each client connection consumes memory and backend processes, which can become a bottleneck under high concurrency. PgBouncer uses connection pooling—a technique where a limited number of persistent connections to the database are maintained and reused across many client sessions—to minimize this overhead. This reduces the cost of repeatedly opening and closing connections, improves scalability, and protects the database from being overwhelmed. It's especially crucial for web applications or microservices that open short-lived, frequent connections. By efficiently managing client requests and limiting actual connections to PostgreSQL, PgBouncer ensures better performance, stability, and resource utilization. 
 
 ### Architecture:
-![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/2fed10a9a14b8c9e38dc08e7d4ac51da02903b89/Task-8/images/pgbouncer.drawio.svg)  
+![image](https://github.com/poridhioss/Node.js-Development-Guide/blob/a0f70de5540e8993ea066949bc7fa96ee36aa23e/Task-8/images/pgbouncerupdated.drawio.svg)  
 
 There are three pooling modes of pg bouncer:
 
