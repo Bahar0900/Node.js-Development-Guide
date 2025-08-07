@@ -31,6 +31,7 @@ CREATE DATABASE mydatabase;
 ```bash
 mkdir myproject
 cd myproject
+git init
 git pull https://github.com/poridhioss/Node.js-Development-Guide-Coding-Section.git
 npm install
 ```
